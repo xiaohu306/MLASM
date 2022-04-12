@@ -107,10 +107,10 @@ class EncoderImage(nn.Module):
         # linear projection to the joint embedding space
         features = self.fc(features)
         # normalization in the joint embedding space
-#         features_1 = self.fc_attn_i(local_image)
+        features_1 = self.fc_attn_i(local_image)
         
         # features = l2norm(local_imgae)
-        features = l2norm(self.fusion(features,local_image))
+        features = l2norm(self.fusion(features,features_1))
         return features
     
 class Fusion(nn.Module):
@@ -232,7 +232,7 @@ class EncoderText(nn.Module):
     def forward(self, word_emb):
         # word_emb_mean = torch.mean(word_emb, 1)
         # cap_emb = self.sa(word_emb, word_emb_mean)
-#         word_emb = l2norm(self.fc_text(word_emb))
+        word_emb = l2norm(self.fc_text(word_emb))
         return word_emb
 
 
